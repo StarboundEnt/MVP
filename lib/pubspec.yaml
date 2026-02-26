@@ -1,0 +1,43 @@
+name: starbound
+description: A behaviourally smart health companion.
+
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+  flutter: '>=3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  provider: ^6.1.1
+  shared_preferences: ^2.2.2
+  google_fonts: ^6.2.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/fonts/Inter/
+    - assets/icons/
+
+  fonts:
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter/Inter-Regular.ttf
+        - asset: assets/fonts/Inter/Inter-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Inter/Inter-Bold.ttf
+          weight: 700
+
+    - family: SpaceMono
+      fonts:
+        - asset: assets/fonts/SpaceMono/SpaceMono-Regular.ttf
+        - asset: assets/fonts/SpaceMono/SpaceMono-Bold.ttf
+          weight: 700

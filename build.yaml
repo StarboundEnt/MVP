@@ -1,0 +1,44 @@
+targets:
+  $default:
+    builders:
+      json_serializable|json_serializable:
+        options:
+          # Creates a Map<String, dynamic> _$PersonToJson(Person instance)
+          # method in the generated part file.
+          create_to_json: true
+          # Creates a Person _$PersonFromJson(Map<String, dynamic> json)
+          # method in the generated part file.
+          create_from_json: true
+          # Generates explicit null checks in the generated code.
+          explicit_to_json: true
+          # Generates field rename annotations.
+          field_rename: snake
+          # Generates generic type arguments for collections.
+          generic_argument_factories: true
+          # Generates code to check for required fields.
+          checked: true
+          # Generates code to disallow extra keys in JSON.
+          disallow_unrecognized_keys: false
+          # Generates code to handle nullable fields.
+          nullable: true
+
+      freezed|freezed:
+        options:
+          # Generates copyWith methods with null safety.
+          copy_with: true
+          # Generates equality comparison methods.
+          equal: true
+          # Generates toString methods.
+          to_string: true
+          # Generates map and when methods for union types.
+          map: true
+          # Generates maybeMap and maybeWhen methods.
+          maybe_map: true
+          # Generates immutable classes.
+          immutable: true
+          # Generates generic type arguments.
+          generic_argument_factories: true
+          # Generates union types.
+          union: true
+          # Generates fallback methods for union types.
+          fallback: true

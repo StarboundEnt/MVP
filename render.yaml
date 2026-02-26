@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: starbound-api
+    runtime: python
+    rootDir: .
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: uvicorn backend.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: COMPLEXITY_API_USE_LOCAL_STORE
+        value: "1"
+      - key: OPENROUTER_API_KEY
+        sync: false          # Set this manually in the Render dashboard — do NOT commit the real key
+      - key: ALLOWED_ORIGINS
+        sync: false          # Set to your Netlify URL e.g. https://starbound.netlify.app
+      - key: PYTHON_VERSION
+        value: "3.11"
+    disk:
+      name: starbound-data
+      mountPath: /opt/render/project/src/backend/data
+      sizeGB: 1

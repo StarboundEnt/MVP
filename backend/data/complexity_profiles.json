@@ -1,0 +1,47 @@
+{
+  "demo-user": {
+    "user": {
+      "id": "demo-user",
+      "consent_status": "active"
+    },
+    "profile_metric": {
+      "id": "metric-demo",
+      "value": 0.72,
+      "computed_at": "2024-06-01T10:00:00Z",
+      "algorithm_version": "demo-1.0"
+    },
+    "choices": [
+      {
+        "id": "sleep_hygiene",
+        "name": "Sleep Hygiene",
+        "modality": "sleep",
+        "capacity_score": 0.6,
+        "last_updated": "2024-05-31T22:00:00Z"
+      },
+      {
+        "id": "daily_hydration",
+        "name": "Daily Hydration",
+        "modality": "hydration",
+        "capacity_score": 0.8,
+        "last_updated": "2024-06-01T08:00:00Z"
+      }
+    ],
+    "constraints": [
+      {
+        "id": "housing_stability",
+        "name": "Housing Stability",
+        "domain": "housing",
+        "constraint_score": 0.85,
+        "last_updated": "2024-05-30T09:00:00Z"
+      }
+    ],
+    "recommended_resources": [
+      {
+        "intervention_id": "int-keep-housing",
+        "name": "Rental assistance program",
+        "status": "proposed",
+        "reason": "address_high_constraint"
+      }
+    ]
+  }
+}

@@ -1,0 +1,154 @@
+{
+  "demo-user": {
+    "id": "demo-user",
+    "displayName": "Demo User",
+    "account": {
+      "role": "member",
+      "organization": {
+        "id": "org-123",
+        "name": "Starbound Cooperative"
+      },
+      "teams": [
+        {
+          "id": "team-ops",
+          "name": "Operations",
+          "slug": "ops"
+        },
+        {
+          "id": "team-research",
+          "name": "Research Guild"
+        }
+      ],
+      "joinDate": "2023-09-12T08:00:00Z",
+      "planTier": "pro",
+      "managedByOrganization": true,
+      "lastLoginAt": "2024-05-28T18:47:00Z",
+      "lastActiveAt": "2024-05-28T19:05:30Z"
+    },
+    "security": {
+      "passwordLastChangedAt": "2024-02-18T09:30:00Z",
+      "mfa": {
+        "enabled": true,
+        "enforced": true,
+        "methods": [
+          "totp",
+          "backup-codes"
+        ]
+      },
+      "ssoProviders": [
+        {
+          "id": "google-oauth",
+          "name": "google",
+          "connectedAt": "2023-09-12T08:05:00Z",
+          "lastUsedAt": "2024-05-28T18:47:00Z"
+        }
+      ],
+      "activeSessions": [
+        {
+          "id": "sess-abc123",
+          "device": "MacBook Pro",
+          "platform": "macOS 14.3",
+          "ip": "203.0.113.10",
+          "createdAt": "2024-05-15T10:12:00Z",
+          "lastSeenAt": "2024-05-28T19:05:30Z",
+          "isCurrent": true,
+          "riskLevel": "low"
+        },
+        {
+          "id": "sess-xyz789",
+          "device": "iPhone 15",
+          "platform": "iOS 17.4",
+          "ip": "198.51.100.24",
+          "createdAt": "2024-05-20T07:48:00Z",
+          "lastSeenAt": "2024-05-22T12:02:10Z",
+          "isCurrent": false,
+          "riskLevel": "medium"
+        }
+      ]
+    },
+    "personalization": {
+      "timeZone": "America/Los_Angeles"
+    },
+    "integrations": {
+      "connectedApps": [
+        {
+          "id": "notion",
+          "name": "Notion",
+          "status": "active",
+          "connectedAt": "2023-10-05T11:00:00Z",
+          "lastSyncAt": "2024-05-27T09:15:00Z"
+        }
+      ],
+      "apiTokens": [
+        {
+          "id": "token-1",
+          "label": "Design Prototype Sync",
+          "createdAt": "2024-01-03T13:25:00Z",
+          "lastUsedAt": "2024-05-28T17:55:00Z",
+          "status": "active",
+          "scopes": [
+            "read:journal",
+            "write:insights"
+          ]
+        }
+      ]
+    },
+    "compliance": {
+      "lastExportAt": "2024-04-30T16:00:00Z",
+      "consents": [
+        {
+          "id": "consent-primary",
+          "label": "Core Terms of Use",
+          "grantedAt": "2023-09-12T08:00:10Z",
+          "status": "granted"
+        },
+        {
+          "id": "consent-research",
+          "label": "Research Participation",
+          "description": "Allows anonymised usage data aggregation",
+          "grantedAt": "2023-11-01T09:12:00Z",
+          "expiresAt": "2024-11-01T09:12:00Z",
+          "status": "granted"
+        }
+      ]
+    },
+    "activity": {
+      "recentEvents": [
+        {
+          "id": "evt-1",
+          "type": "login",
+          "occurredAt": "2024-05-28T18:47:00Z",
+          "summary": "Logged in from San Francisco, CA",
+          "actor": "self"
+        },
+        {
+          "id": "evt-2",
+          "type": "integration-sync",
+          "occurredAt": "2024-05-27T09:15:00Z",
+          "summary": "Synced Notion workspace",
+          "actor": "system"
+        }
+      ],
+      "trustedDevices": [
+        {
+          "id": "device-mbp",
+          "agent": "MacBook Pro · Chrome 124",
+          "lastSeenAt": "2024-05-28T19:05:30Z",
+          "location": "San Francisco, US",
+          "isCurrent": true
+        },
+        {
+          "id": "device-iphone",
+          "agent": "iPhone 15 · Safari",
+          "lastSeenAt": "2024-05-22T12:02:10Z",
+          "location": "San Francisco, US",
+          "isCurrent": false
+        }
+      ]
+    },
+    "featureFlags": [
+      "insights-beta"
+    ],
+    "lastUpdatedAt": "2024-05-28T19:05:30Z"
+  }
+}

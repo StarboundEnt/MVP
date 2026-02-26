@@ -1,0 +1,95 @@
+{
+  "version": "2024-06-15",
+  "instruments": {
+    "onboarding_survey_v1": {
+      "q_sleep_schedule": {
+        "prompt": "How regular is your sleep schedule?",
+        "response_type": "likert_1_5",
+        "target": {
+          "type": "choice",
+          "id": "sleep_hygiene",
+          "modality": "sleep"
+        },
+        "transforms": {
+          "score_mapping": {
+            "1": 0.1,
+            "2": 0.3,
+            "3": 0.5,
+            "4": 0.7,
+            "5": 0.9
+          },
+          "store_raw": true
+        },
+        "observation_type": "survey"
+      },
+      "q_housing_security": {
+        "prompt": "Do you feel secure in your current housing for the next 6 months?",
+        "response_type": "multiple_choice",
+        "target": {
+          "type": "chance",
+          "id": "housing_stability",
+          "domain": "housing"
+        },
+        "transforms": {
+          "option_scores": {
+            "secure": 0.2,
+            "somewhat_uncertain": 0.5,
+            "unstable": 0.8
+          }
+        },
+        "observation_type": "survey"
+      }
+    },
+    "daily_journal": {
+      "followup_hydration": {
+        "prompt": "How many cups of water did you drink today?",
+        "response_type": "numeric",
+        "target": {
+          "type": "choice",
+          "id": "daily_hydration",
+          "modality": "hydration"
+        },
+        "transforms": {
+          "input_unit": "cups",
+          "output_unit": "litres",
+          "conversion_factor": 0.236588
+        },
+        "observation_type": "self_report"
+      }
+    },
+    "coach_checkin_v1": {
+      "note_caregiving": {
+        "prompt": "List any caregiving responsibilities affecting health goals.",
+        "response_type": "free_text",
+        "target": {
+          "type": "chance",
+          "id": "caregiving_load",
+          "domain": "caregiving"
+        },
+        "transforms": {
+          "nlp_pipeline": "caregiving_context",
+          "confidence_threshold": 0.7
+        },
+        "observation_type": "coach_note"
+      }
+    },
+    "monthly_reflection": {
+      "q_support_network": {
+        "prompt": "Who supports you when things get tough?",
+        "response_type": "free_text",
+        "target": {
+          "type": "chance",
+          "id": "social_support",
+          "domain": "social_support"
+        },
+        "transforms": {
+          "nlp_pipeline": "support_network",
+          "flags": [
+            "no_support_mentioned"
+          ]
+        },
+        "observation_type": "self_report"
+      }
+    }
+  }
+}

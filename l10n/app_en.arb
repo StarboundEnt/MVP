@@ -1,0 +1,347 @@
+{
+  "@@locale": "en",
+  "@@context": "Starbound App Localization - English",
+
+  "appName": "Starbound",
+  "@appName": {
+    "description": "The name of the application"
+  },
+
+  "appTagline": "Your Behaviorally-Smart Health Companion",
+  "@appTagline": {
+    "description": "App tagline shown on onboarding and marketing"
+  },
+
+  "welcomeMessage": "Welcome to Starbound",
+  "@welcomeMessage": {
+    "description": "Welcome message shown on first launch"
+  },
+
+  "getStarted": "Get Started",
+  "@getStarted": {
+    "description": "Button text to begin onboarding"
+  },
+
+  "skip": "Skip",
+  "@skip": {
+    "description": "Button text to skip optional steps"
+  },
+
+  "next": "Next",
+  "@next": {
+    "description": "Button text to proceed to next step"
+  },
+
+  "back": "Back",
+  "@back": {
+    "description": "Button text to go back"
+  },
+
+  "done": "Done",
+  "@done": {
+    "description": "Button text when completing an action"
+  },
+
+  "save": "Save",
+  "@save": {
+    "description": "Button text to save changes"
+  },
+
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Button text to cancel an action"
+  },
+
+  "delete": "Delete",
+  "@delete": {
+    "description": "Button text to delete an item"
+  },
+
+  "edit": "Edit",
+  "@edit": {
+    "description": "Button text to edit an item"
+  },
+
+  "confirm": "Confirm",
+  "@confirm": {
+    "description": "Button text to confirm an action"
+  },
+
+  "navHome": "Home",
+  "@navHome": {
+    "description": "Bottom navigation label for home"
+  },
+
+  "navJournal": "Journal",
+  "@navJournal": {
+    "description": "Bottom navigation label for journal"
+  },
+
+  "navAnalytics": "Analytics",
+  "@navAnalytics": {
+    "description": "Bottom navigation label for analytics"
+  },
+
+  "navSettings": "Settings",
+  "@navSettings": {
+    "description": "Bottom navigation label for settings"
+  },
+
+  "todayHabits": "Today's Habits",
+  "@todayHabits": {
+    "description": "Section header for today's habits"
+  },
+
+  "habitCompleted": "Habit completed!",
+  "@habitCompleted": {
+    "description": "Toast message when habit is marked complete"
+  },
+
+  "habitCompletedCount": "{count, plural, =1{1 habit completed today} other{{count} habits completed today}}",
+  "@habitCompletedCount": {
+    "description": "Message showing number of habits completed",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "3"
+      }
+    }
+  },
+
+  "addHabit": "Add Habit",
+  "@addHabit": {
+    "description": "Button text to add a new habit"
+  },
+
+  "habitName": "Habit name",
+  "@habitName": {
+    "description": "Label for habit name input"
+  },
+
+  "habitNameHint": "e.g., Morning meditation",
+  "@habitNameHint": {
+    "description": "Placeholder for habit name input"
+  },
+
+  "habitFrequency": "Frequency",
+  "@habitFrequency": {
+    "description": "Label for habit frequency setting"
+  },
+
+  "habitCategory": "Category",
+  "@habitCategory": {
+    "description": "Label for habit category"
+  },
+
+  "deleteHabitConfirm": "Are you sure you want to delete this habit?",
+  "@deleteHabitConfirm": {
+    "description": "Confirmation message before deleting habit"
+  },
+
+  "journalPrompt": "How are you feeling today?",
+  "@journalPrompt": {
+    "description": "Default journal prompt"
+  },
+
+  "journalEntryPlaceholder": "Start writing or tap the mic to speak...",
+  "@journalEntryPlaceholder": {
+    "description": "Placeholder text for journal entry"
+  },
+
+  "journalEntrySaved": "Journal entry saved",
+  "@journalEntrySaved": {
+    "description": "Toast message when journal entry is saved"
+  },
+
+  "mood": "Mood",
+  "@mood": {
+    "description": "Label for mood selection"
+  },
+
+  "moodGreat": "Great",
+  "@moodGreat": {
+    "description": "Mood option: Great"
+  },
+
+  "moodGood": "Good",
+  "@moodGood": {
+    "description": "Mood option: Good"
+  },
+
+  "moodOkay": "Okay",
+  "@moodOkay": {
+    "description": "Mood option: Okay"
+  },
+
+  "moodBad": "Bad",
+  "@moodBad": {
+    "description": "Mood option: Bad"
+  },
+
+  "moodTerrible": "Terrible",
+  "@moodTerrible": {
+    "description": "Mood option: Terrible"
+  },
+
+  "energy": "Energy",
+  "@energy": {
+    "description": "Label for energy level"
+  },
+
+  "energyHigh": "High",
+  "@energyHigh": {
+    "description": "Energy level: High"
+  },
+
+  "energyMedium": "Medium",
+  "@energyMedium": {
+    "description": "Energy level: Medium"
+  },
+
+  "energyLow": "Low",
+  "@energyLow": {
+    "description": "Energy level: Low"
+  },
+
+  "insights": "Insights",
+  "@insights": {
+    "description": "Section header for insights"
+  },
+
+  "weeklyInsights": "Weekly Insights",
+  "@weeklyInsights": {
+    "description": "Title for weekly insights section"
+  },
+
+  "streakDays": "{count, plural, =1{1 day streak} other{{count} day streak}}",
+  "@streakDays": {
+    "description": "Habit streak counter",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "7"
+      }
+    }
+  },
+
+  "notificationsTitle": "Notifications",
+  "@notificationsTitle": {
+    "description": "Title for notifications settings"
+  },
+
+  "notificationsDescription": "Manage your reminders and nudges",
+  "@notificationsDescription": {
+    "description": "Description for notifications settings"
+  },
+
+  "enableNotifications": "Enable notifications",
+  "@enableNotifications": {
+    "description": "Toggle label to enable notifications"
+  },
+
+  "privacyTitle": "Privacy & Security",
+  "@privacyTitle": {
+    "description": "Title for privacy settings"
+  },
+
+  "privacyDescription": "Control your data and security",
+  "@privacyDescription": {
+    "description": "Description for privacy settings"
+  },
+
+  "exportData": "Export Data",
+  "@exportData": {
+    "description": "Button text to export user data"
+  },
+
+  "deleteAccount": "Delete Account",
+  "@deleteAccount": {
+    "description": "Button text to delete account"
+  },
+
+  "deleteAccountWarning": "This action cannot be undone. All your data will be permanently deleted.",
+  "@deleteAccountWarning": {
+    "description": "Warning message before account deletion"
+  },
+
+  "about": "About",
+  "@about": {
+    "description": "About section title"
+  },
+
+  "version": "Version {version}",
+  "@version": {
+    "description": "App version display",
+    "placeholders": {
+      "version": {
+        "type": "String",
+        "example": "1.0.0"
+      }
+    }
+  },
+
+  "termsOfService": "Terms of Service",
+  "@termsOfService": {
+    "description": "Link to terms of service"
+  },
+
+  "privacyPolicy": "Privacy Policy",
+  "@privacyPolicy": {
+    "description": "Link to privacy policy"
+  },
+
+  "contactSupport": "Contact Support",
+  "@contactSupport": {
+    "description": "Button to contact support"
+  },
+
+  "errorGeneric": "Something went wrong. Please try again.",
+  "@errorGeneric": {
+    "description": "Generic error message"
+  },
+
+  "errorNetwork": "No internet connection. Please check your network.",
+  "@errorNetwork": {
+    "description": "Network error message"
+  },
+
+  "errorPermission": "Permission denied. Please grant the required permission in settings.",
+  "@errorPermission": {
+    "description": "Permission error message"
+  },
+
+  "loadingData": "Loading...",
+  "@loadingData": {
+    "description": "Loading state message"
+  },
+
+  "syncInProgress": "Syncing data...",
+  "@syncInProgress": {
+    "description": "Sync in progress message"
+  },
+
+  "syncComplete": "Sync complete",
+  "@syncComplete": {
+    "description": "Sync completed message"
+  },
+
+  "offline": "You're offline",
+  "@offline": {
+    "description": "Offline status message"
+  },
+
+  "searchHint": "Search habits, journals, insights...",
+  "@searchHint": {
+    "description": "Search input placeholder"
+  },
+
+  "noResults": "No results found",
+  "@noResults": {
+    "description": "Empty search results message"
+  },
+
+  "tryAgain": "Try again",
+  "@tryAgain": {
+    "description": "Button text to retry an action"
+  }
+}

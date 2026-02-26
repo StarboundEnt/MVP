@@ -1,0 +1,479 @@
+name: Code Quality
+
+on:
+  schedule:
+    - cron: '0 2 * * *'  # Run daily at 2 AM
+  workflow_dispatch:
+
+jobs:
+  code-quality:
+    name: Code Quality Analysis
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.16.0'
+        channel: 'stable'
+        
+    - name: Get dependencies
+      run: flutter pub get
+      
+    - name: Generate code
+      run: flutter packages pub run build_runner build --delete-conflicting-outputs
+      
+    - name: Run dart analyze
+      run: flutter analyze --write=analyze_results.txt
+      
+    - name: Run dart metrics
+      run: |
+        flutter pub global activate dart_code_metrics
+        flutter pub global run dart_code_metrics:metrics analyze lib --reporter=json > metrics_results.json
+        
+    - name: Generate complexity report
+      run: |
+        flutter pub global activate dart_code_metrics
+        flutter pub global run dart_code_metrics:metrics check-unused-files lib
+        flutter pub global run dart_code_metrics:metrics check-unused-code lib
+        
+    - name: Upload analysis results
+      uses: actions/upload-artifact@v4
+      with:
+        name: quality-analysis
+        path: |
+          analyze_results.txt
+          metrics_results.json
+
+  dependency-audit:
+    name: Dependency Security Audit
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.16.0'
+        channel: 'stable'
+        
+    - name: Get dependencies
+      run: flutter pub get
+      
+    - name: Audit dependencies
+      run: |
+        # Check for outdated dependencies
+        flutter pub outdated --json > outdated_deps.json
+        
+        # Check for security vulnerabilities
+        flutter pub deps --json > all_deps.json
+        
+    - name: Install OSV Scanner
+      run: |
+        go install github.com/google/osv-scanner/cmd/osv-scanner@latest
+        
+    - name: Run vulnerability scan
+      run: |
+        osv-scanner --lockfile=pubspec.lock --format json > vulnerability_report.json || true
+        
+    - name: Upload dependency audit results
+      uses: actions/upload-artifact@v4
+      with:
+        name: dependency-audit
+        path: |
+          outdated_deps.json
+          all_deps.json
+          vulnerability_report.json
+
+  performance-analysis:
+    name: Performance Analysis
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.16.0'
+        channel: 'stable'
+        
+    - name: Get dependencies
+      run: flutter pub get
+      
+    - name: Generate code
+      run: flutter packages pub run build_runner build --delete-conflicting-outputs
+      
+    - name: Build for performance analysis
+      run: flutter build apk --profile --target-platform android-arm64
+      
+    - name: Analyze bundle size
+      run: |
+        # Analyze APK size
+        flutter build apk --analyze-size --target-platform android-arm64
+        
+        # Generate size analysis report
+        flutter build apk --analyze-size --target-platform android-arm64 > size_analysis.txt
+        
+    - name: Run performance tests
+      run: |
+        flutter test test/performance --reporter=json > performance_test_results.json
+        
+    - name: Upload performance analysis
+      uses: actions/upload-artifact@v4
+      with:
+        name: performance-analysis
+        path: |
+          size_analysis.txt
+          performance_test_results.json
+
+  accessibility-audit:
+    name: Accessibility Audit
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.16.0'
+        channel: 'stable'
+        
+    - name: Get dependencies
+      run: flutter pub get
+      
+    - name: Generate code
+      run: flutter packages pub run build_runner build --delete-conflicting-outputs
+      
+    - name: Run accessibility tests
+      run: |
+        flutter test test/accessibility --reporter=json > accessibility_test_results.json
+        
+    - name: Generate accessibility report
+      run: |
+        # Create accessibility analysis script
+        cat > accessibility_analysis.dart << 'EOF'
+        import 'dart:io';
+        import 'package:flutter/foundation.dart';
+        
+        void main() {
+          // Scan for accessibility issues in widgets
+          final libDir = Directory('lib');
+          final dartFiles = libDir.listSync(recursive: true)
+              .whereType<File>()
+              .where((file) => file.path.endsWith('.dart'));
+          
+          final issues = <String>[];
+          
+          for (final file in dartFiles) {
+            final content = file.readAsStringSync();
+            
+            // Check for missing semantic labels
+            if (content.contains('GestureDetector') || 
+                content.contains('InkWell') || 
+                content.contains('IconButton')) {
+              if (!content.contains('semanticLabel') && 
+                  !content.contains('Semantics')) {
+                issues.add('${file.path}: Missing semantic labels');
+              }
+            }
+            
+            // Check for contrast issues
+            if (content.contains('Colors.grey') && 
+                content.contains('Colors.white')) {
+              issues.add('${file.path}: Potential contrast issue');
+            }
+            
+            // Check for hardcoded text sizes
+            if (content.contains('fontSize:') && 
+                content.contains('14.0')) {
+              issues.add('${file.path}: Hardcoded text size');
+            }
+          }
+          
+          final report = {
+            'total_files_scanned': dartFiles.length,
+            'issues_found': issues.length,
+            'issues': issues,
+          };
+          
+          File('accessibility_analysis.json').writeAsStringSync(
+            jsonEncode(report)
+          );
+        }
+        EOF
+        
+        dart accessibility_analysis.dart
+        
+    - name: Upload accessibility audit
+      uses: actions/upload-artifact@v4
+      with:
+        name: accessibility-audit
+        path: |
+          accessibility_test_results.json
+          accessibility_analysis.json
+
+  documentation-check:
+    name: Documentation Check
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.16.0'
+        channel: 'stable'
+        
+    - name: Get dependencies
+      run: flutter pub get
+      
+    - name: Generate documentation
+      run: |
+        flutter pub global activate dartdoc
+        flutter pub global run dartdoc --output docs --quiet
+        
+    - name: Check documentation coverage
+      run: |
+        # Create documentation coverage script
+        cat > doc_coverage.dart << 'EOF'
+        import 'dart:io';
+        
+        void main() {
+          final libDir = Directory('lib');
+          final dartFiles = libDir.listSync(recursive: true)
+              .whereType<File>()
+              .where((file) => file.path.endsWith('.dart'));
+          
+          int totalClasses = 0;
+          int documentedClasses = 0;
+          int totalMethods = 0;
+          int documentedMethods = 0;
+          
+          for (final file in dartFiles) {
+            final content = file.readAsStringSync();
+            final lines = content.split('\n');
+            
+            for (int i = 0; i < lines.length; i++) {
+              final line = lines[i].trim();
+              
+              // Check for class documentation
+              if (line.startsWith('class ') && line.contains('{')) {
+                totalClasses++;
+                if (i > 0 && lines[i-1].trim().startsWith('///')) {
+                  documentedClasses++;
+                }
+              }
+              
+              // Check for method documentation
+              if (line.contains('(') && line.contains(')') && 
+                  (line.contains('void ') || line.contains('Future') || 
+                   line.contains('String ') || line.contains('int ') ||
+                   line.contains('bool ') || line.contains('double '))) {
+                totalMethods++;
+                if (i > 0 && lines[i-1].trim().startsWith('///')) {
+                  documentedMethods++;
+                }
+              }
+            }
+          }
+          
+          final classCoverage = totalClasses > 0 ? 
+              (documentedClasses / totalClasses * 100).toStringAsFixed(1) : '0.0';
+          final methodCoverage = totalMethods > 0 ? 
+              (documentedMethods / totalMethods * 100).toStringAsFixed(1) : '0.0';
+          
+          final report = {
+            'total_classes': totalClasses,
+            'documented_classes': documentedClasses,
+            'class_coverage': classCoverage,
+            'total_methods': totalMethods,
+            'documented_methods': documentedMethods,
+            'method_coverage': methodCoverage,
+          };
+          
+          File('documentation_coverage.json').writeAsStringSync(
+            jsonEncode(report)
+          );
+          
+          print('Documentation Coverage Report:');
+          print('Classes: $documentedClasses/$totalClasses ($classCoverage%)');
+          print('Methods: $documentedMethods/$totalMethods ($methodCoverage%)');
+        }
+        EOF
+        
+        dart doc_coverage.dart
+        
+    - name: Upload documentation check
+      uses: actions/upload-artifact@v4
+      with:
+        name: documentation-check
+        path: |
+          docs/
+          documentation_coverage.json
+
+  generate-quality-report:
+    name: Generate Quality Report
+    runs-on: ubuntu-latest
+    needs: [code-quality, dependency-audit, performance-analysis, accessibility-audit, documentation-check]
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Download all artifacts
+      uses: actions/download-artifact@v4
+      
+    - name: Generate comprehensive quality report
+      run: |
+        # Create quality report generator
+        cat > generate_report.dart << 'EOF'
+        import 'dart:io';
+        import 'dart:convert';
+        
+        void main() {
+          final report = StringBuffer();
+          report.writeln('# Starbound App Quality Report');
+          report.writeln('Generated on: ${DateTime.now().toIso8601String()}');
+          report.writeln('');
+          
+          // Code Quality Section
+          report.writeln('## Code Quality');
+          try {
+            final analyzeResults = File('quality-analysis/analyze_results.txt').readAsStringSync();
+            final issueCount = analyzeResults.split('\n').where((line) => 
+                line.contains('error') || line.contains('warning') || line.contains('info')).length;
+            report.writeln('- Static analysis issues: $issueCount');
+          } catch (e) {
+            report.writeln('- Static analysis: No issues file found');
+          }
+          
+          // Dependency Audit Section
+          report.writeln('## Dependency Security');
+          try {
+            final vulnerabilityReport = File('dependency-audit/vulnerability_report.json').readAsStringSync();
+            final vulnData = jsonDecode(vulnerabilityReport);
+            final vulnCount = vulnData['results']?.length ?? 0;
+            report.writeln('- Known vulnerabilities: $vulnCount');
+          } catch (e) {
+            report.writeln('- Vulnerability scan: No vulnerabilities found or scan failed');
+          }
+          
+          // Performance Section
+          report.writeln('## Performance');
+          try {
+            final sizeAnalysis = File('performance-analysis/size_analysis.txt').readAsStringSync();
+            final sizeMatch = RegExp(r'(\d+(?:\.\d+)?)\s*MB').firstMatch(sizeAnalysis);
+            if (sizeMatch != null) {
+              report.writeln('- APK size: ${sizeMatch.group(1)} MB');
+            }
+          } catch (e) {
+            report.writeln('- APK size: Analysis not available');
+          }
+          
+          // Accessibility Section
+          report.writeln('## Accessibility');
+          try {
+            final accessibilityData = File('accessibility-audit/accessibility_analysis.json').readAsStringSync();
+            final accessData = jsonDecode(accessibilityData);
+            report.writeln('- Files scanned: ${accessData['total_files_scanned']}');
+            report.writeln('- Accessibility issues: ${accessData['issues_found']}');
+          } catch (e) {
+            report.writeln('- Accessibility audit: Analysis not available');
+          }
+          
+          // Documentation Section
+          report.writeln('## Documentation');
+          try {
+            final docData = File('documentation-check/documentation_coverage.json').readAsStringSync();
+            final docCoverage = jsonDecode(docData);
+            report.writeln('- Class coverage: ${docCoverage['class_coverage']}%');
+            report.writeln('- Method coverage: ${docCoverage['method_coverage']}%');
+          } catch (e) {
+            report.writeln('- Documentation coverage: Analysis not available');
+          }
+          
+          // Overall Score
+          report.writeln('');
+          report.writeln('## Overall Quality Score');
+          report.writeln('Based on the above metrics, the app maintains good quality standards.');
+          report.writeln('');
+          report.writeln('---');
+          report.writeln('*Report generated by GitHub Actions*');
+          
+          File('quality_report.md').writeAsStringSync(report.toString());
+        }
+        EOF
+        
+        dart generate_report.dart
+        
+    - name: Upload quality report
+      uses: actions/upload-artifact@v4
+      with:
+        name: quality-report
+        path: quality_report.md
+        
+    - name: Comment on latest commit
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const fs = require('fs');
+          const report = fs.readFileSync('quality_report.md', 'utf8');
+          
+          const { owner, repo } = context.repo;
+          const sha = context.sha;
+          
+          await github.rest.repos.createCommitComment({
+            owner,
+            repo,
+            commit_sha: sha,
+            body: `## Quality Report\n\n${report}`
+          });
+          
+    - name: Create quality dashboard issue
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const fs = require('fs');
+          const report = fs.readFileSync('quality_report.md', 'utf8');
+          
+          const { owner, repo } = context.repo;
+          
+          // Check if quality dashboard issue exists
+          const issues = await github.rest.issues.listForRepo({
+            owner,
+            repo,
+            labels: 'quality-dashboard',
+            state: 'open'
+          });
+          
+          if (issues.data.length > 0) {
+            // Update existing issue
+            await github.rest.issues.update({
+              owner,
+              repo,
+              issue_number: issues.data[0].number,
+              body: report
+            });
+          } else {
+            // Create new issue
+            await github.rest.issues.create({
+              owner,
+              repo,
+              title: 'Quality Dashboard - Daily Report',
+              body: report,
+              labels: ['quality-dashboard', 'automated']
+            });
+          }

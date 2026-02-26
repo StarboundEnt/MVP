@@ -1,0 +1,64 @@
+name: starbound
+description: A behaviourally smart health companion.
+
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+  flutter: '>=3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  provider: ^6.1.1
+  shared_preferences: ^2.2.2
+  google_fonts: ^6.2.1
+  http: ^1.1.0
+  url_launcher: ^6.2.5
+  flutter_local_notifications: ^17.2.2
+  timezone: ^0.9.4
+  permission_handler: ^11.3.1
+  flutter_secure_storage: ^9.0.0
+  crypto: ^3.0.3
+  encrypt: ^5.0.1
+  convert: ^3.1.1
+  device_info_plus: ^10.1.0
+  local_auth: ^2.1.6
+  equatable: ^2.0.5
+  freezed_annotation: ^2.4.1
+  json_annotation: ^4.8.1
+  path_provider: ^2.1.1
+  google_generative_ai: ^0.4.7
+  lucide_icons: ^0.257.0
+  mobile_scanner: ^3.5.6
+  speech_to_text: ^7.2.0
+  flutter_hooks: ^0.20.5
+  qr_flutter: ^4.1.0
+  share_plus: ^7.2.2
+  archive: ^3.4.10
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+  integration_test:
+    sdk: flutter
+  build_runner: ^2.4.7
+  mockito: ^5.4.4
+  bloc_test: ^9.1.5
+  golden_toolkit: ^0.15.0
+  test: ^1.24.9
+  freezed: ^2.4.7
+  json_serializable: ^6.7.1
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/models/
+    - assets/images/Logo.png
+    - assets/images/
+    - .env
+    #    - assets/fonts/Inter/
+    #    - assets/icons/

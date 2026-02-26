@@ -1,0 +1,54 @@
+{
+  "metadata": {
+    "version": "2024-06-15",
+    "description": "Controlled vocabularies for Complexity Profile ingestion guardrails"
+  },
+  "choice_modalities": [
+    "sleep",
+    "movement",
+    "nutrition",
+    "hydration",
+    "screen_time",
+    "mindfulness",
+    "stress_management",
+    "social_connection",
+    "medical_adherence"
+  ],
+  "chance_domains": [
+    "financial",
+    "housing",
+    "employment",
+    "education",
+    "caregiving",
+    "transportation",
+    "social_support",
+    "environment",
+    "discrimination",
+    "healthcare_access",
+    "civic_participation"
+  ],
+  "observation_types": [
+    "self_report",
+    "device_stream",
+    "survey",
+    "context_event",
+    "coach_note",
+    "intake_assessment"
+  ],
+  "metric_types": [
+    "capacity_score",
+    "constraint_score",
+    "complexity_profile",
+    "trend_index"
+  ],
+  "effort_levels": [
+    "low",
+    "medium",
+    "high"
+  ],
+  "facet_types": [
+    "choice",
+    "chance",
+    "mixed"
+  ]
+}
